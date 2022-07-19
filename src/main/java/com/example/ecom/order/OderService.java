@@ -1,5 +1,6 @@
 package com.example.ecom.order;
 
+import com.example.ecom.jwtConfig.JwtTokenUtil;
 import com.example.ecom.product.Product;
 import com.example.ecom.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,13 @@ public class OderService {
     OrderRepository orderRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
     public Page<CustomerOrder> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
 
-    public CustomerOrder addOrder(CreateOrderRequest request) {
+    public CustomerOrder addOrder(CreateOrderRequest request, int userId) {
         CustomerOrder customerOrder = new CustomerOrder();
         Product prod = productRepository.findById(request.productId).get();
 //        prod.productId = request.productId;
@@ -28,7 +31,7 @@ public class OderService {
         customerOrder.customerName = request.customerName;
         customerOrder.address = request.address;
         customerOrder.quantity = request.quantity;
-        customerOrder.userId = request.userId;
+        customerOrder.userId = userId;
 
 
         Optional<Product> existingProduct = productRepository.findById(request.productId);

@@ -5,5 +5,4 @@ public class CreateOrderRequest {
     public int quantity;
     public String customerName;
     public String address;
-    public int userId;
 }

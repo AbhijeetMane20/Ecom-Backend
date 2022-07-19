@@ -1,5 +1,6 @@
 package com.example.ecom.jwtConfig;
 
+import com.example.ecom.order.CustomerOrder;
 import com.example.ecom.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -39,6 +40,7 @@ public class JwtTokenUtil implements Serializable {
         claims.put("userId" , user.userId);
         return doGenerateToken(claims, user.userName);
     }
+
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder()

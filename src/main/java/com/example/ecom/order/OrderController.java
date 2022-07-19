@@ -1,5 +1,6 @@
 package com.example.ecom.order;
 
+import com.example.ecom.jwtConfig.JwtTokenUtil;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OderService oderService;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/orders")
     public Page<CustomerOrder> getAllOrders(Pageable pageable){
@@ -19,11 +22,14 @@ public class OrderController {
     }
 
     @PutMapping("/order")
-    public CustomerOrder addOrder (@RequestBody CreateOrderRequest request){
-        return oderService.addOrder(request);
+    public CustomerOrder addOrder (@RequestBody CreateOrderRequest request, @RequestHeader("Authorization") String authorization){
+        String token = authorization.replace("Bearer","");
+        int userId = jwtTokenUtil.getUserIdFromToken(token);
+        return oderService.addOrder(request, userId);
     }
     @PostMapping("/order/{id}/cancle")
     public void cancleOrder (@PathVariable int id){
+
         oderService.cancleOrder(id);
 
     }
@@ -36,7 +42,9 @@ public class OrderController {
         return oderService.getOrderById(id);
     }
     @GetMapping ("/order")
-    public List<CustomerOrder> getOrderByUserId (@RequestParam int userId){
+    public List<CustomerOrder> getOrderByUserId (@RequestHeader("Authorization") String authorization){
+        String token = authorization.replace("Bearer","");
+        int userId = jwtTokenUtil.getUserIdFromToken(token);
         return oderService.getOrderByUserId(userId);
     }
 
