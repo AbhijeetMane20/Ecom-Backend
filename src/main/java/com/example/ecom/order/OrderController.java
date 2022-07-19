@@ -1,0 +1,43 @@
+package com.example.ecom.order;
+
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController("/order")
+public class OrderController {
+    @Autowired
+    OderService oderService;
+
+    @GetMapping("/orders")
+    public Page<CustomerOrder> getAllOrders(Pageable pageable){
+        return oderService.getAllOrders(pageable);
+    }
+
+    @PutMapping("/order")
+    public CustomerOrder addOrder (@RequestBody CreateOrderRequest request){
+        return oderService.addOrder(request);
+    }
+    @PostMapping("/order/{id}/cancle")
+    public void cancleOrder (@PathVariable int id){
+        oderService.cancleOrder(id);
+
+    }
+    @GetMapping ("/order/{id}/status")
+    public String getStatus (@PathVariable int id){
+        return oderService.getOrderStatus(id);
+    }
+    @GetMapping ("/order/{id}")
+    public CustomerOrder getOrderById (@PathVariable int id){
+        return oderService.getOrderById(id);
+    }
+    @GetMapping ("/order")
+    public List<CustomerOrder> getOrderByUserId (@RequestParam int userId){
+        return oderService.getOrderByUserId(userId);
+    }
+
+}
