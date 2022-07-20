@@ -38,8 +38,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-jar {
-	manifest {
-		attributes 'Main-Class': 'com.example.ecom.EcomApplication.java'
-	}
-}
+//jar {
+//	manifest {
+//		attributes["Main-Class"] = "com.example.ecom.EcomApplication"
+//	}
+//}
