@@ -42,4 +42,9 @@ tasks.named('test') {
 //	manifest {
 //		attributes["Main-Class"] = "com.example.ecom.EcomApplication"
 //	}
-//}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.example.ecom.Main'
+	}
+}
