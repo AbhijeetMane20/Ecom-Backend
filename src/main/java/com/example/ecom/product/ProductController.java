@@ -13,7 +13,14 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
-
+    @GetMapping("/")
+    public String welcome(){
+        return "Welcome";
+    }
+    @GetMapping("/ping")
+    public String ping(){
+        return "Ping";
+    }
     @GetMapping("/products")
     public Page<Product> getAllProductsList (Pageable pageable){
         return productService.getAllProducts(pageable);
