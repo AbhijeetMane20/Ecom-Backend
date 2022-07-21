@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //@CrossOrigin(origins = "http://ecom-frontend-react-app.s3-website.ap-south-1.amazonaws.com")
+@CrossOrigin
 @RestController("/order")
 public class OrderController {
     @Autowired
