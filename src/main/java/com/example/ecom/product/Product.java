@@ -1,5 +1,6 @@
 package com.example.ecom.product;
 
+import com.example.ecom.cart.UserCart;
 import com.example.ecom.order.CustomerOrder;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +20,7 @@ public class Product {
     public double productPrice;
     public String productImage;
 
-//    @ManyToOne
-//    public CustomerOrder customerOrder;
+
 
 
 }
