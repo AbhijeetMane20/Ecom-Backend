@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "http://ecom-frontend-react-app.s3-website.ap-south-1.amazonaws.com")
+//@CrossOrigin(origins = "http://ecom-frontend-react-app.s3-website.ap-south-1.amazonaws.com")
 @RestController("/order")
 public class OrderController {
     @Autowired

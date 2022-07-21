@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://ecom-frontend-react-app.s3-website.ap-south-1.amazonaws.com")
+//@CrossOrigin(origins = "http://ecom-frontend-react-app.s3-website.ap-south-1.amazonaws.com")
 public class UserController {
     @Autowired
     UserService userService;
