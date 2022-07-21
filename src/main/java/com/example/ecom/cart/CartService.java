@@ -7,6 +7,7 @@ import com.example.ecom.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,14 +25,10 @@ public class CartService {
         userCart.userId = userId;
         return cartRepository.save(userCart);
 
-//        Optional<Product> existingProduct = productRepository.findById(cartRequest.productId);
-//        if (existingProduct.isPresent()){
-//            Product product = existingProduct.get();
-//            userCart.product.add(product);
-//            UserCart addProduct = cartRepository.save(userCart);
-//            return addProduct;
-//        }
-//        return null;
+    }
 
+    public List<UserCart> getUserCartByUserId(int id) {
+        List<UserCart> userCarts = cartRepository.findByUserId(id);
+        return userCarts;
     }
 }
