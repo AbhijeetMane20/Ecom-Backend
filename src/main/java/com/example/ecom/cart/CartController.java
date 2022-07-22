@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@RestController("/cart")
+@CrossOrigin
+@RestController
+@RequestMapping("/cart")
 public class CartController {
     @Autowired
     CartService cartService;
@@ -27,6 +28,12 @@ public class CartController {
         String token = authorization.replace("Bearer", "");
         int userId = jwtTokenUtil.getUserIdFromToken(token);
         return cartService.getUserCartByUserId(userId);
+    }
+    @DeleteMapping("/cartItem/{id}")
+    public void deleteItem (@PathVariable int id, @RequestHeader("Authorization") String authorization){
+        String token = authorization.replace("Bearer", "");
+        int userId = jwtTokenUtil.getUserIdFromToken(token);
+        cartService.deleteUserItemByUserId(id,userId);
     }
 
 }

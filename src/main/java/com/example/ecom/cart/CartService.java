@@ -1,11 +1,10 @@
 package com.example.ecom.cart;
 
-import com.example.ecom.order.CreateOrderRequest;
-import com.example.ecom.order.CustomerOrder;
 import com.example.ecom.product.Product;
 import com.example.ecom.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,5 +29,12 @@ public class CartService {
     public List<UserCart> getUserCartByUserId(int id) {
         List<UserCart> userCarts = cartRepository.findByUserId(id);
         return userCarts;
+    }
+
+    @Transactional
+    public void deleteUserItemByUserId(int id, int userId) {
+
+            cartRepository.deleteByUserIdAndProductProductId(userId,id);
+
     }
 }
