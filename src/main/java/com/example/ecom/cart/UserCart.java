@@ -15,7 +15,8 @@ public class UserCart {
     public int cartItemId;
     public int userId;
     public int quantity;
-//    public List<Product> products = new ArrayList<Product>();
+    public double totalPrice;
+    public double totalPriceWithGST;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id")
     public Product product;

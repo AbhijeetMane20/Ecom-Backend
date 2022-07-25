@@ -1,5 +1,6 @@
 package com.example.ecom.cart;
 
+import com.example.ecom.order.CustomerOrder;
 import com.example.ecom.product.Product;
 import com.example.ecom.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,17 @@ public class CartService {
         userCart.product = prod;
         userCart.quantity = cartRequest.quantity;
         userCart.userId = userId;
-        return cartRepository.save(userCart);
 
+
+        Optional<Product> existingProduct = productRepository.findById(cartRequest.productId);
+        if (existingProduct.isPresent()){
+            Product product = existingProduct.get();
+            userCart.totalPrice = cartRequest.quantity * product.productPrice;
+            userCart.totalPriceWithGST = userCart.totalPrice * 1.18;
+            UserCart savedOrder = cartRepository.save(userCart);
+            return savedOrder;
+        }
+return null;
     }
 
     public List<UserCart> getUserCartByUserId(int id) {
