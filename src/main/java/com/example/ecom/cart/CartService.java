@@ -1,6 +1,5 @@
 package com.example.ecom.cart;
 
-import com.example.ecom.order.CustomerOrder;
 import com.example.ecom.product.Product;
 import com.example.ecom.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +16,34 @@ public class CartService {
     @Autowired
     ProductRepository productRepository;
 
-    public UserCart addToCart(CartRequest cartRequest, int userId) {
-        UserCart userCart = new UserCart();
-        Product prod = productRepository.findById(cartRequest.productId).get();
-        userCart.product = prod;
-        userCart.quantity = cartRequest.quantity;
-        userCart.userId = userId;
+
+    public CartItem addToCart(CartRequest cartRequest, int userId) {
+
+            CartItem cartItem = new CartItem();
+            Product prod = productRepository.findById(cartRequest.productId).get();
+            cartItem.product = prod;
+            cartItem.quantity = cartRequest.quantity;
+            cartItem.userId = userId;
 
 
-        Optional<Product> existingProduct = productRepository.findById(cartRequest.productId);
-        if (existingProduct.isPresent()){
-            Product product = existingProduct.get();
-            userCart.totalPrice = cartRequest.quantity * product.productPrice;
-            userCart.totalPriceWithGST = userCart.totalPrice * 1.18;
-            UserCart savedOrder = cartRepository.save(userCart);
-            return savedOrder;
-        }
+            Optional<Product> existingProduct = productRepository.findById(cartRequest.productId);
+            if (existingProduct.isPresent()) {
+                Product product = existingProduct.get();
+                cartItem.totalPrice = cartRequest.quantity * product.productPrice;
+                cartItem.totalPriceWithGST = cartItem.totalPrice * 1.18;
+                CartItem savedOrder = cartRepository.save(cartItem);
+                return savedOrder;
+            }
+
 return null;
     }
 
-    public List<UserCart> getUserCartByUserId(int id) {
-        List<UserCart> userCarts = cartRepository.findByUserId(id);
-        return userCarts;
+    public CartResponse getUserCartByUserId(int id) {
+        List<CartItem> cartItems = cartRepository.findByUserId(id);
+        CartResponse cartResponse = new CartResponse();
+        cartResponse.cartItems = cartItems;
+        cartResponse.totalPrice = cartRepository.getUserCartTotalPrice(id);
+        return cartResponse;
     }
 
     @Transactional
@@ -46,5 +51,19 @@ return null;
 
             cartRepository.deleteByUserIdAndProductProductId(userId,id);
 
+    }
+
+    @Transactional
+    public void updateCart(int id, CartRequest cartRequest) {
+
+        Optional<Product> existingProduct = productRepository.findById(cartRequest.productId);
+        if (existingProduct.isPresent()) {
+            Product product = existingProduct.get();
+           double totalPrice = cartRequest.quantity * product.productPrice;
+            double totalPriceWithGST = totalPrice * 1.18;
+
+            cartRepository.updateByCartItemId(cartRequest.quantity, totalPrice,totalPriceWithGST,id);
+
+        }
     }
 }
