@@ -20,6 +20,7 @@ public class CartController {
         int userId = jwtTokenUtil.getUserIdFromToken(token);
         return cartService.addToCart(cartRequest, userId);
     }
+
     @PostMapping("/updateCart/{id}")
     public void updateCart(@PathVariable int id, @RequestBody CartRequest cartRequest) {
         cartService.updateCart(id, cartRequest);
