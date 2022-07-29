@@ -39,5 +39,9 @@ public class CartController {
         int userId = jwtTokenUtil.getUserIdFromToken(token);
         cartService.deleteUserItemByUserId(id,userId);
     }
+    @DeleteMapping("/cartItem")
+    public void deleteCart(){
+        cartService.deleteUserCart();
+    }
 
 }

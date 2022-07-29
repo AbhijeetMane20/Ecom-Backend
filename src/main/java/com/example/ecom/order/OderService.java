@@ -38,16 +38,17 @@ public class OderService {
         customerOrder.address = request.address;
         customerOrder.userId = userId;
         customerOrder.totalPrice = request.totalPrice;
-        CustomerOrder savedOrder = orderRepository.save(customerOrder);
-        List<LineItem> dbLineItem = request.lineItems.stream().map(item -> {
+        List<LineItem> dbLineItems = request.lineItems.stream().map(item -> {
             LineItem lineItem = new LineItem();
-            lineItem.orderId = savedOrder.orderId;
             lineItem.quantity = item.quantity;
             Product product = productRepository.findByProductId(item.productId);
             lineItem.product = product;
             return lineItem;
         }).collect(Collectors.toList());
-        lineItemRepository.saveAll(dbLineItem);
+        customerOrder.lineItems = dbLineItems;
+        CustomerOrder savedOrder = orderRepository.save(customerOrder);
+
+//        lineItemRepository.saveAll(dbLineItems);
 
 
         return savedOrder;

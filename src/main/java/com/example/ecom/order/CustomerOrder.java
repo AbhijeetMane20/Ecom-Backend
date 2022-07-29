@@ -21,8 +21,9 @@ public class CustomerOrder {
     public int userId;
 
 
-
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    public List<LineItem> lineItems;
 
 
 //    @OneToMany (mappedBy = "customerOrder")

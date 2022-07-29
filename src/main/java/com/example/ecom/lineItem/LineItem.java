@@ -11,7 +11,7 @@ public class LineItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
-    public int orderId;
+//    public int orderId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     public Product product;

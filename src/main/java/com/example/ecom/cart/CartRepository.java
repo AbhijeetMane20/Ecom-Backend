@@ -15,6 +15,7 @@ public interface CartRepository extends JpaRepository<CartItem,Integer> {
     @Query(value = "delete from user_cart cart where cart.user_id=:userId and cart.product_id=:productId", nativeQuery = true)
     void deleteByUserIdAndProductProductId(@Param("userId") int userId,@Param("productId") int productId);
 
+
     @Query(value = "SELECT sum(total_price) from user_cart cart where cart.user_id=:userId", nativeQuery = true)
     double getUserCartTotalPrice(@Param("userId") int userId);
 
