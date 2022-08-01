@@ -66,4 +66,8 @@ return null;
 
         }
     }
+
+    public void deleteUserCart() {
+        cartRepository.deleteAll();
+    }
 }

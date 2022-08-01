@@ -20,6 +20,7 @@ public class CartController {
         int userId = jwtTokenUtil.getUserIdFromToken(token);
         return cartService.addToCart(cartRequest, userId);
     }
+
     @PostMapping("/updateCart/{id}")
     public void updateCart(@PathVariable int id, @RequestBody CartRequest cartRequest) {
         cartService.updateCart(id, cartRequest);
@@ -37,6 +38,10 @@ public class CartController {
         String token = authorization.replace("Bearer", "");
         int userId = jwtTokenUtil.getUserIdFromToken(token);
         cartService.deleteUserItemByUserId(id,userId);
+    }
+    @DeleteMapping("/cartItem")
+    public void deleteCart(){
+        cartService.deleteUserCart();
     }
 
 }
